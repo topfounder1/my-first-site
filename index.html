@@ -3,6 +3,9 @@
 <head>
   <title>Ultra Pro Game</title>
 
+  <!-- PWA uchun -->
+  <link rel="manifest" href="manifest.json">
+
   <style>
     body {
       background: linear-gradient(to right, #4facfe, #00f2fe);
@@ -58,7 +61,7 @@
     var vaqt = 10;
     var timer;
 
-    // 🏆 leaderboard
+    // leaderboard
     var bestScore = localStorage.getItem("bestScore") || 0;
     document.getElementById("score").innerHTML = "Score: 0 | Best: " + bestScore;
 
@@ -89,7 +92,6 @@
       if (userSon == togriSon) {
         score++;
 
-        // 🏆 best score update
         if (score > bestScore) {
           bestScore = score;
           localStorage.setItem("bestScore", bestScore);
@@ -118,6 +120,11 @@
     function playLose() {
       var audio = new Audio("https://www.soundjay.com/button/sounds/button-10.mp3");
       audio.play();
+    }
+
+    // service worker ulash (4-qadam uchun tayyor)
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js");
     }
 
     startTimer();
