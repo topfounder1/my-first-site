@@ -3,7 +3,6 @@
 <head>
   <title>Ultra Pro Game</title>
 
-  <!-- PWA uchun -->
   <link rel="manifest" href="manifest.json">
 
   <style>
@@ -34,6 +33,11 @@
       cursor: pointer;
       margin: 5px;
     }
+
+    #countdown {
+      font-size: 40px;
+      font-weight: bold;
+    }
   </style>
 </head>
 
@@ -43,31 +47,80 @@
 
     <h2>🎮 Ultra Game</h2>
 
-    <p id="timer">⏱ Vaqt: 10</p>
+    <!-- START -->
+    <div id="startScreen">
+      <p>🤔 Tayyormisiz?</p>
+      <button onclick="startCountdown()">Boshlash ▶️</button>
+    </div>
 
-    <input type="number" id="taxmin" placeholder="Son kiriting">
-    <br><br>
+    <!-- COUNTDOWN -->
+    <div id="countdownScreen" style="display:none;">
+      <p id="countdown">3</p>
+    </div>
 
-    <button onclick="tekshir()">Tekshir</button>
+    <!-- GAME -->
+    <div id="gameScreen" style="display:none;">
+      <p id="timer">⏱ Vaqt: 20</p>
 
-    <p id="natija"></p>
-    <p id="score"></p>
+      <input type="number" id="taxmin" placeholder="Son kiriting">
+      <br><br>
+
+      <button onclick="tekshir()">Tekshir</button>
+
+      <p id="natija"></p>
+      <p id="score"></p>
+    </div>
 
   </div>
 
   <script>
-    var togriSon = Math.floor(Math.random() * 10) + 1;
+    var togriSon;
     var score = 0;
-    var vaqt = 10;
+    var vaqt = 20;
     var timer;
 
-    // leaderboard
     var bestScore = localStorage.getItem("bestScore") || 0;
-    document.getElementById("score").innerHTML = "Score: 0 | Best: " + bestScore;
+
+    function startCountdown() {
+      document.getElementById("startScreen").style.display = "none";
+      document.getElementById("countdownScreen").style.display = "block";
+
+      var count = 3;
+      var el = document.getElementById("countdown");
+
+      var interval = setInterval(function() {
+        el.innerHTML = count;
+        count--;
+
+        if (count < 0) {
+          clearInterval(interval);
+          el.innerHTML = "GO! 🚀";
+
+          setTimeout(function() {
+            document.getElementById("countdownScreen").style.display = "none";
+            startGame();
+          }, 1000);
+        }
+      }, 1000);
+    }
+
+    function startGame() {
+      document.getElementById("gameScreen").style.display = "block";
+
+      score = 0;
+      document.getElementById("score").innerHTML = "Score: 0 | Best: " + bestScore;
+
+      yangiOyin();
+    }
+
+    function yangiOyin() {
+      togriSon = Math.floor(Math.random() * 10) + 1;
+      startTimer();
+    }
 
     function startTimer() {
       clearInterval(timer);
-      vaqt = 10;
+      vaqt = 20;
       document.getElementById("timer").innerHTML = "⏱ Vaqt: " + vaqt;
 
       timer = setInterval(function() {
@@ -103,8 +156,7 @@
         card.classList.add("win");
         playWin();
 
-        togriSon = Math.floor(Math.random() * 10) + 1;
-        startTimer();
+        yangiOyin();
       } else {
         document.getElementById("natija").innerHTML = "❌ Xato!";
         card.classList.add("lose");
@@ -122,12 +174,9 @@
       audio.play();
     }
 
-    // service worker ulash (4-qadam uchun tayyor)
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("service-worker.js");
     }
-
-    startTimer();
   </script>
 
 </body>
