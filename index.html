@@ -1,15 +1,28 @@
 <!DOCTYPE html>
 <html>
-  <body id="body" style="background-color: lightblue; text-align: center;">
+  <body style="background-color: lightblue; text-align: center;">
 
-    <h1>Salom, men topfounder1 😎</h1>
-    <p>Bu mening birinchi saytim 🚀</p>
+    <h1>🎮 Sonni top o‘yini</h1>
+    <p>1 dan 10 gacha son o‘yladim, topa olasizmi? 😎</p>
 
-    <button onclick="rangOzgar()">Rangni o‘zgartir 🎨</button>
+    <input type="number" id="taxmin" placeholder="Son kiriting">
+    <br><br>
+
+    <button onclick="tekshir()">Tekshir 🔍</button>
+
+    <p id="natija"></p>
 
     <script>
-      function rangOzgar() {
-        document.getElementById("body").style.backgroundColor = "yellow";
+      var togriSon = Math.floor(Math.random() * 10) + 1;
+
+      function tekshir() {
+        var userSon = document.getElementById("taxmin").value;
+
+        if (userSon == togriSon) {
+          document.getElementById("natija").innerHTML = "🎉 To‘g‘ri topdingiz!";
+        } else {
+          document.getElementById("natija").innerHTML = "❌ Xato! Yana urinib ko‘ring";
+        }
       }
     </script>
 
