@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Sonni top o‘yini</title>
+  <title>Ultra Pro Game</title>
 
   <style>
     body {
@@ -12,88 +12,104 @@
 
     .card {
       background: white;
-      width: 300px;
-      margin: 100px auto;
+      width: 320px;
+      margin: 80px auto;
       padding: 20px;
       border-radius: 15px;
       box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     }
 
+    .win { background-color: #b2ffb2 !important; }
+    .lose { background-color: #ffb2b2 !important; }
+
     button {
       background-color: #4facfe;
       color: white;
       border: none;
-      padding: 10px 20px;
+      padding: 10px;
       border-radius: 8px;
       cursor: pointer;
-    }
-
-    .fade {
-      animation: fadeIn 0.5s;
-    }
-
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
+      margin: 5px;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="card">
-    <h2>🎮 Sonni top</h2>
-    <p>1 dan 10 gacha sonni toping</p>
+  <div class="card" id="card">
+
+    <h2>🎮 Ultra Game</h2>
+
+    <p id="timer">⏱ Vaqt: 10</p>
 
     <input type="number" id="taxmin" placeholder="Son kiriting">
     <br><br>
 
-    <button onclick="tekshir()">Tekshir 🔍</button>
+    <button onclick="tekshir()">Tekshir</button>
 
     <p id="natija"></p>
-    <p id="urinish"></p>
     <p id="score"></p>
+
   </div>
 
   <script>
     var togriSon = Math.floor(Math.random() * 10) + 1;
-    var count = 0;
     var score = 0;
+    var vaqt = 10;
+    var timer;
+
+    function startTimer() {
+      clearInterval(timer);
+      vaqt = 10;
+      document.getElementById("timer").innerHTML = "⏱ Vaqt: " + vaqt;
+
+      timer = setInterval(function() {
+        vaqt--;
+        document.getElementById("timer").innerHTML = "⏱ Vaqt: " + vaqt;
+
+        if (vaqt <= 0) {
+          clearInterval(timer);
+          document.getElementById("natija").innerHTML = "💀 Vaqt tugadi!";
+          document.getElementById("card").classList.add("lose");
+          playLose();
+        }
+      }, 1000);
+    }
 
     function tekshir() {
       var userSon = document.getElementById("taxmin").value;
-      var natijaEl = document.getElementById("natija");
+      var card = document.getElementById("card");
 
-      if (count >= 3) {
-        natijaEl.innerHTML = "💀 GAME OVER!";
-        count = 0;
-        togriSon = Math.floor(Math.random() * 10) + 1;
-        return;
-      }
-
-      count++;
+      card.classList.remove("win", "lose");
 
       if (userSon == togriSon) {
         score++;
-        natijaEl.innerHTML = "🎉 To‘g‘ri topdingiz!";
+        document.getElementById("natija").innerHTML = "🎉 To‘g‘ri!";
         document.getElementById("score").innerHTML = "Score: " + score;
 
-        count = 0;
+        card.classList.add("win");
+        playWin();
+
         togriSon = Math.floor(Math.random() * 10) + 1;
-      } 
-      else if (userSon < togriSon) {
-        natijaEl.innerHTML = "⬆️ Kattaroq son kiriting";
-      } 
-      else {
-        natijaEl.innerHTML = "⬇️ Kichikroq son kiriting";
+        startTimer();
+      } else {
+        document.getElementById("natija").innerHTML = "❌ Xato!";
+        card.classList.add("lose");
+        playLose();
       }
-
-      document.getElementById("urinish").innerHTML = "Urinishlar: " + count;
-
-      natijaEl.classList.remove("fade");
-      void natijaEl.offsetWidth;
-      natijaEl.classList.add("fade");
     }
+
+    function playWin() {
+      var audio = new Audio("https://www.soundjay.com/button/sounds/button-3.mp3");
+      audio.play();
+    }
+
+    function playLose() {
+      var audio = new Audio("https://www.soundjay.com/button/sounds/button-10.mp3");
+      audio.play();
+    }
+
+    startTimer();
   </script>
 
 </body>
