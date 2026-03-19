@@ -75,16 +75,37 @@
 
       var natijaEl = document.getElementById("natija");
 
-      if (userSon == togriSon) {
-        natijaEl.innerHTML = "🎉 To‘g‘ri topdingiz!";
-        document.getElementById("urinish").innerHTML = "Urinishlar: " + count;
+      <script>
+  var togriSon = Math.floor(Math.random() * 10) + 1;
+  var count = 0;
 
-        togriSon = Math.floor(Math.random() * 10) + 1;
-        count = 0;
-      } else {
-        natijaEl.innerHTML = "❌ Xato! Yana urinib ko‘ring";
-        document.getElementById("urinish").innerHTML = "Urinishlar: " + count;
-      }
+  function tekshir() {
+    var userSon = document.getElementById("taxmin").value;
+    count++;
+
+    var natijaEl = document.getElementById("natija");
+
+    if (userSon == togriSon) {
+      natijaEl.innerHTML = "🎉 To‘g‘ri topdingiz!";
+      document.getElementById("urinish").innerHTML = "Urinishlar: " + count;
+
+      togriSon = Math.floor(Math.random() * 10) + 1;
+      count = 0;
+    } 
+    else if (userSon < togriSon) {
+      natijaEl.innerHTML = "⬆️ Kattaroq son kiriting";
+      document.getElementById("urinish").innerHTML = "Urinishlar: " + count;
+    } 
+    else {
+      natijaEl.innerHTML = "⬇️ Kichikroq son kiriting";
+      document.getElementById("urinish").innerHTML = "Urinishlar: " + count;
+    }
+
+    natijaEl.classList.remove("fade");
+    void natijaEl.offsetWidth;
+    natijaEl.classList.add("fade");
+  }
+</script>
 
       // animatsiya qo‘shish
       natijaEl.classList.remove("fade");
