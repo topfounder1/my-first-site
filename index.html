@@ -69,6 +69,11 @@
 
       <p id="natija"></p>
       <p id="score"></p>
+
+      <!-- 🔄 Qayta urinish -->
+      <button id="retryBtn" onclick="restartGame()" style="display:none;">
+        🔄 Qayta urinish
+      </button>
     </div>
 
   </div>
@@ -106,6 +111,7 @@
 
     function startGame() {
       document.getElementById("gameScreen").style.display = "block";
+      document.getElementById("retryBtn").style.display = "none";
 
       score = 0;
       document.getElementById("score").innerHTML = "Score: 0 | Best: " + bestScore;
@@ -129,9 +135,7 @@
 
         if (vaqt <= 0) {
           clearInterval(timer);
-          document.getElementById("natija").innerHTML = "💀 Vaqt tugadi!";
-          document.getElementById("card").classList.add("lose");
-          playLose();
+          finishGame("💀 Vaqt tugadi!", "lose");
         }
       }, 1000);
     }
@@ -150,18 +154,38 @@
           localStorage.setItem("bestScore", bestScore);
         }
 
-        document.getElementById("natija").innerHTML = "🎉 To‘g‘ri!";
-        document.getElementById("score").innerHTML = "Score: " + score + " | Best: " + bestScore;
+        finishGame("🎉 To‘g‘ri!", "win");
 
-        card.classList.add("win");
-        playWin();
-
-        yangiOyin();
       } else {
         document.getElementById("natija").innerHTML = "❌ Xato!";
         card.classList.add("lose");
         playLose();
       }
+    }
+
+    function finishGame(text, type) {
+      clearInterval(timer);
+
+      var card = document.getElementById("card");
+
+      document.getElementById("natija").innerHTML = text;
+      document.getElementById("score").innerHTML = "Score: " + score + " | Best: " + bestScore;
+
+      card.classList.add(type);
+
+      if (type === "win") playWin();
+      else playLose();
+
+      document.getElementById("retryBtn").style.display = "block";
+    }
+
+    function restartGame() {
+      document.getElementById("retryBtn").style.display = "none";
+      document.getElementById("natija").innerHTML = "";
+      document.getElementById("taxmin").value = "";
+      document.getElementById("card").classList.remove("win", "lose");
+
+      yangiOyin();
     }
 
     function playWin() {
