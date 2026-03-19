@@ -51,7 +51,6 @@
 <body>
 
   <div class="card">
-
     <h2>🎮 Sonni top</h2>
     <p>1 dan 10 gacha sonni toping</p>
 
@@ -62,7 +61,6 @@
 
     <p id="natija"></p>
     <p id="urinish"></p>
-
   </div>
 
   <script>
@@ -75,39 +73,22 @@
 
       var natijaEl = document.getElementById("natija");
 
-      <script>
-  var togriSon = Math.floor(Math.random() * 10) + 1;
-  var count = 0;
+      if (userSon == togriSon) {
+        natijaEl.innerHTML = "🎉 To‘g‘ri topdingiz!";
+        document.getElementById("urinish").innerHTML = "Urinishlar: " + count;
 
-  function tekshir() {
-    var userSon = document.getElementById("taxmin").value;
-    count++;
+        togriSon = Math.floor(Math.random() * 10) + 1;
+        count = 0;
+      } 
+      else if (userSon < togriSon) {
+        natijaEl.innerHTML = "⬆️ Kattaroq son kiriting";
+        document.getElementById("urinish").innerHTML = "Urinishlar: " + count;
+      } 
+      else {
+        natijaEl.innerHTML = "⬇️ Kichikroq son kiriting";
+        document.getElementById("urinish").innerHTML = "Urinishlar: " + count;
+      }
 
-    var natijaEl = document.getElementById("natija");
-
-    if (userSon == togriSon) {
-      natijaEl.innerHTML = "🎉 To‘g‘ri topdingiz!";
-      document.getElementById("urinish").innerHTML = "Urinishlar: " + count;
-
-      togriSon = Math.floor(Math.random() * 10) + 1;
-      count = 0;
-    } 
-    else if (userSon < togriSon) {
-      natijaEl.innerHTML = "⬆️ Kattaroq son kiriting";
-      document.getElementById("urinish").innerHTML = "Urinishlar: " + count;
-    } 
-    else {
-      natijaEl.innerHTML = "⬇️ Kichikroq son kiriting";
-      document.getElementById("urinish").innerHTML = "Urinishlar: " + count;
-    }
-
-    natijaEl.classList.remove("fade");
-    void natijaEl.offsetWidth;
-    natijaEl.classList.add("fade");
-  }
-</script>
-
-      // animatsiya qo‘shish
       natijaEl.classList.remove("fade");
       void natijaEl.offsetWidth;
       natijaEl.classList.add("fade");
