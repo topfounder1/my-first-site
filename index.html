@@ -11,17 +11,26 @@
     <button onclick="tekshir()">Tekshir 🔍</button>
 
     <p id="natija"></p>
+    <p id="urinish"></p>
 
     <script>
       var togriSon = Math.floor(Math.random() * 10) + 1;
+      var count = 0;
 
       function tekshir() {
         var userSon = document.getElementById("taxmin").value;
+        count++;
 
         if (userSon == togriSon) {
           document.getElementById("natija").innerHTML = "🎉 To‘g‘ri topdingiz!";
+          document.getElementById("urinish").innerHTML = "Urinishlar soni: " + count;
+
+          // yangi o‘yin boshlash
+          togriSon = Math.floor(Math.random() * 10) + 1;
+          count = 0;
         } else {
           document.getElementById("natija").innerHTML = "❌ Xato! Yana urinib ko‘ring";
+          document.getElementById("urinish").innerHTML = "Urinishlar: " + count;
         }
       }
     </script>
