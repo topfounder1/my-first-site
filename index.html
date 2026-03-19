@@ -2,41 +2,63 @@
 <html>
 <head>
   <title>Sonni top o‘yini</title>
-</head>
 
-<body style="background: linear-gradient(to right, #4facfe, #00f2fe); font-family: Arial; text-align: center;">
+  <style>
+    body {
+      background: linear-gradient(to right, #4facfe, #00f2fe);
+      font-family: Arial;
+      text-align: center;
+    }
 
-  <div style="
-    background: white;
-    width: 300px;
-    margin: 100px auto;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-  ">
+    .card {
+      background: white;
+      width: 300px;
+      margin: 100px auto;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
 
-    <h2>🎮 Sonni top</h2>
-    <p>1 dan 10 gacha sonni toping</p>
+    .card:active {
+      transform: scale(0.95);
+    }
 
-    <input type="number" id="taxmin" placeholder="Son kiriting" style="
-      padding: 10px;
-      width: 80%;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    ">
-
-    <br><br>
-
-    <button onclick="tekshir()" style="
+    button {
       background-color: #4facfe;
       color: white;
       border: none;
       padding: 10px 20px;
       border-radius: 8px;
       cursor: pointer;
-    ">
-      Tekshir 🔍
-    </button>
+    }
+
+    button:hover {
+      transform: scale(1.1);
+    }
+
+    .fade {
+      animation: fadeIn 0.5s;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+
+    <h2>🎮 Sonni top</h2>
+    <p>1 dan 10 gacha sonni toping</p>
+
+    <input type="number" id="taxmin" placeholder="Son kiriting">
+    <br><br>
+
+    <button onclick="tekshir()">Tekshir 🔍</button>
 
     <p id="natija"></p>
     <p id="urinish"></p>
@@ -51,16 +73,23 @@
       var userSon = document.getElementById("taxmin").value;
       count++;
 
+      var natijaEl = document.getElementById("natija");
+
       if (userSon == togriSon) {
-        document.getElementById("natija").innerHTML = "🎉 To‘g‘ri topdingiz!";
+        natijaEl.innerHTML = "🎉 To‘g‘ri topdingiz!";
         document.getElementById("urinish").innerHTML = "Urinishlar: " + count;
 
         togriSon = Math.floor(Math.random() * 10) + 1;
         count = 0;
       } else {
-        document.getElementById("natija").innerHTML = "❌ Xato! Yana urinib ko‘ring";
+        natijaEl.innerHTML = "❌ Xato! Yana urinib ko‘ring";
         document.getElementById("urinish").innerHTML = "Urinishlar: " + count;
       }
+
+      // animatsiya qo‘shish
+      natijaEl.classList.remove("fade");
+      void natijaEl.offsetWidth;
+      natijaEl.classList.add("fade");
     }
   </script>
 
